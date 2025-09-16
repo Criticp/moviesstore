@@ -71,3 +71,10 @@
   object-fit: cover;
   border-radius: 0.5rem;
 }
+
+/* --- Website Title --- */
+.navbar-brand {
+  font-size: 2rem;   /* increase the size (default ~1.25rem) */
+  font-weight: bold; /* optional: make it bolder */
+}
+
