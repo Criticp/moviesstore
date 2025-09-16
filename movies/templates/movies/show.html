@@ -7,6 +7,23 @@
       <div class="col-md-6 mx-auto mb-3">
         <h2>{{ template_data.movie.name }}</h2>
         <hr />
+
+        {# S–Z user story: hide / un-hide control #}
+        {% if user.is_authenticated %}
+        <form class="mb-3" method="post" action="{% url 'movies.hide_toggle' id=template_data.movie.id %}">
+          {% csrf_token %}
+          {% if template_data.is_hidden %}
+          <button class="btn btn-warning" type="submit">Un-hide</button>
+          {% else %}
+          <button class="btn btn-outline-secondary" type="submit">Hide</button>
+          {% endif %}
+        </form>
+        {% else %}
+        <p class="mb-3">
+          <a class="btn btn-outline-secondary" href="{% url 'accounts.login' %}">Sign in to hide</a>
+        </p>
+        {% endif %}
+
         <p><b>Description:</b> {{ template_data.movie.description }}</p>
         <p><b>Price:</b> ${{ template_data.movie.price }}</p>
         <p class="card-text">

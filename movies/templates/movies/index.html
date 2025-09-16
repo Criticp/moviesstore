@@ -13,12 +13,17 @@
               <div class="col-auto">
                 <div class="input-group col-auto">
                   <div class="input-group-text">Search</div>
-                  <input type="text" class="form-control" name="search">
+                  <input type="text" class="form-control" name="search" value="{{ request.GET.search }}">
                 </div>
               </div>
               <div class="col-auto">
                 <button class="btn bg-dark text-white" type="submit">Search</button>
               </div>
+              {% if user.is_authenticated %}
+              <div class="col-auto">
+                <a class="btn btn-outline-secondary" href="{% url 'movies.hidden' %}">Hidden Movies</a>
+              </div>
+              {% endif %}
             </div>
           </form>
         </p>
@@ -28,13 +33,23 @@
       {% for movie in template_data.movies %}
       <div class="col-md-4 col-lg-3 mb-2">
         <div class="p-2 card align-items-center pt-4">
-          <img src="{{ movie.image.url }}" class="img-fluid movie-thumb">
+          <img src="{{ movie.image.url }}" class="img-fluid movie-thumb" alt="{{ movie.name }}">
           <div class="card-body text-center">
             <a href="{% url 'movies.show' id=movie.id %}" class="btn bg-dark text-white">
               {{ movie.name }}
             </a>
+            {% if user.is_authenticated %}
+            <form class="mt-2" method="post" action="{% url 'movies.hide_toggle' id=movie.id %}">
+              {% csrf_token %}
+              <button class="btn btn-outline-secondary btn-sm" type="submit">Hide</button>
+            </form>
+            {% endif %}
           </div>
         </div>
+      </div>
+      {% empty %}
+      <div class="col">
+        <p>No movies to show.</p>
       </div>
       {% endfor %}
     </div>
