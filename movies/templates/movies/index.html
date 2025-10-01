@@ -19,11 +19,18 @@
               <div class="col-auto">
                 <button class="btn bg-dark text-white" type="submit">Search</button>
               </div>
+
+              {# Keep existing Hidden Movies link (only if signed-in) #}
               {% if user.is_authenticated %}
               <div class="col-auto">
                 <a class="btn btn-outline-secondary" href="{% url 'movies.hidden' %}">Hidden Movies</a>
               </div>
               {% endif %}
+
+              {# NEW: Petitions page link (same styling convention) #}
+              <div class="col-auto">
+                <a class="btn btn-outline-secondary" href="{% url 'movies.petitions_list' %}">Movie Petitions</a>
+              </div>
             </div>
           </form>
         </p>

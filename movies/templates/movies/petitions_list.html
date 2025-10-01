@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-3">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col mx-auto mb-3">
+        <h2>Petitions</h2>
+        <hr />
+      </div>
+    </div>
+
+    {% if user.is_authenticated %}
+    <div class="row">
+      <div class="col-md-8 col-lg-7 mx-auto mb-4">
+        <div class="card shadow p-3 rounded">
+          <div class="card-body">
+            <b class="text-start">Create a new petition</b><br /><br />
+            <form method="POST" action="{% url 'movies.petitions_list' %}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="title" class="form-label">Movie title (or short petition title)</label>
+                <input id="title" name="title" type="text" required class="form-control" />
+              </div>
+              <div class="mb-3">
+                <label for="reason" class="form-label">Reason (optional)</label>
+                <textarea id="reason" name="reason" class="form-control" rows="3"></textarea>
+              </div>
+              <div class="text-center">
+                <button class="btn bg-dark text-white" type="submit">Submit Petition</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="row">
+      <div class="col-md-8 col-lg-7 mx-auto mb-4">
+        <div class="alert alert-info">
+          Please <a href="{% url 'accounts.login' %}">sign in</a> to create a petition or vote.
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+      <div class="col-12">
+        <h3 class="mt-3 mb-3">All petitions</h3>
+      </div>
+      {% for p in template_data.petitions %}
+      <div class="col-md-6 col-lg-4 mb-3">
+        <div class="card h-100 p-2">
+          <div class="card-body">
+            <h5 class="card-title">{{ p.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              by {{ p.requested_by.username }} — {{ p.created_at }}
+            </h6>
+            {% if p.reason %}
+              <p class="card-text">{{ p.reason }}</p>
+            {% endif %}
+
+            <p class="card-text"><b>Yes votes:</b> {{ p.yes_count }}</p>
+
+            <div class="d-flex gap-2 flex-wrap">
+              {% if user.is_authenticated %}
+              <form method="post" action="{% url 'movies.petition_vote_yes' petition_id=p.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-success btn-sm">Vote Yes</button>
+              </form>
+              {% else %}
+              <a class="btn btn-outline-success btn-sm" href="{% url 'accounts.login' %}">Sign in to vote</a>
+              {% endif %}
+
+              {# Owner controls: only show to the petition's creator #}
+              {% if user.is_authenticated and user.id == p.requested_by_id %}
+                <a class="btn btn-primary btn-sm" href="{% url 'movies.petition_edit' petition_id=p.id %}">Edit</a>
+                <form method="post" action="{% url 'movies.petition_delete' petition_id=p.id %}" onsubmit="return confirm('Delete this petition?');">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col">
+        <p>No petitions yet. Be the first to create one!</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock content %}

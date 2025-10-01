@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Movie, Review, HiddenMovie
+from django.db.models import Count
+from .models import Movie, Review, HiddenMovie, Petition, PetitionVote
 
 
 def index(request):
@@ -114,3 +115,75 @@ def hidden_list(request):
         'movies': movies,
     }
     return render(request, 'movies/hidden_list.html', {'template_data': template_data})
+
+
+@login_required
+def petitions_list(request):
+    if request.method == 'POST':
+        title = (request.POST.get('title') or '').strip()
+        reason = (request.POST.get('reason') or '').strip()
+        if not title:
+            messages.error(request, 'Please provide a title for your petition.')
+        else:
+            Petition.objects.create(
+                title=title,
+                reason=reason,
+                requested_by=request.user,
+            )
+            messages.success(request, 'Petition created.')
+            return redirect('movies.petitions_list')
+    petitions = Petition.objects.annotate(yes_count=Count('votes')).order_by('-created_at')
+    template_data = {
+        'title': 'Petitions',
+        'petitions': petitions,
+    }
+    return render(request, 'movies/petitions_list.html', {'template_data': template_data})
+
+def petition_vote_yes(request, petition_id):
+    petition = get_object_or_404(Petition, id=petition_id)
+    _, created = PetitionVote.objects.get_or_create(petition=petition, user=request.user)
+    if created:
+        messages.success(request, 'Your vote has been recorded.')
+    else:
+        messages.info(request, 'You already voted Yes on this petition.')
+    return redirect('movies.petitions_list')
+
+
+def petition_edit(request, petition_id):
+    petition = get_object_or_404(Petition, id=petition_id)
+    if petition.requested_by != request.user:
+        messages.error(request, 'You can only edit your own petition.')
+        return redirect('movies.petitions_list')
+
+    if request.method == 'GET':
+        template_data = {
+            'title': 'Edit Petition',
+            'petition': petition,
+        }
+        return render(request, 'movies/edit_petition.html', {'template_data': template_data})
+
+    # POST
+    title = (request.POST.get('title') or '').strip()
+    reason = (request.POST.get('reason') or '').strip()
+    if not title:
+        messages.error(request, 'Please provide a title.')
+        return redirect('movies.petition_edit', petition_id=petition.id)
+
+    petition.title = title
+    petition.reason = reason
+    petition.save()
+    messages.success(request, 'Petition updated.')
+    return redirect('movies.petitions_list')
+
+def petition_delete(request, petition_id):
+    petition = get_object_or_404(Petition, id=petition_id)
+    if petition.requested_by != request.user:
+        messages.error(request, 'You can only delete your own petition.')
+        return redirect('movies.petitions_list')
+
+    if request.method == 'POST':
+        petition.delete()
+        messages.success(request, 'Petition deleted.')
+        return redirect('movies.petitions_list')
+
+    return redirect('movies.petitions_list')

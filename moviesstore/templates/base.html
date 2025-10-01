@@ -33,6 +33,11 @@
                  href="{% url 'movies.hidden' %}">Hidden Movies</a>
             </li>
             {% endif %}
+            <li class="nav-item">
+                <a class="nav-link{% if request.resolver_match.url_name == 'movies.petitions_list' %} active{% endif %}"
+                   href="{% url 'movies.petitions_list' %}">Movie Petitions</a>
+            </li>
+
           </ul>
             <a class="nav-link" href="{% url 'cart.index' %}">Cart</a>
             <div class="vr bg-white mx-2 d-none d-lg-block"></div>

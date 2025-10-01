@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-3">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-8 col-lg-7 mx-auto mb-3">
+        <h2>Edit Petition</h2>
+        <hr />
+        <div class="card shadow p-3 rounded">
+          <div class="card-body">
+            <form method="POST" action="{% url 'movies.petition_edit' petition_id=template_data.petition.id %}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="title" class="form-label">Movie title (or short petition title)</label>
+                <input id="title" name="title" type="text" required class="form-control" value="{{ template_data.petition.title }}" />
+              </div>
+              <div class="mb-3">
+                <label for="reason" class="form-label">Reason (optional)</label>
+                <textarea id="reason" name="reason" class="form-control" rows="3">{{ template_data.petition.reason }}</textarea>
+              </div>
+              <div class="d-flex gap-2">
+                <button class="btn bg-dark text-white" type="submit">Save Changes</button>
+                <a class="btn btn-outline-secondary" href="{% url 'movies.petitions_list' %}">Cancel</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

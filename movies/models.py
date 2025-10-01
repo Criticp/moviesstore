@@ -39,3 +39,30 @@ class HiddenMovie(models.Model):
 
     def __str__(self):
         return f"{self.user.username} hides {self.movie.name}"
+
+
+class Petition(models.Model):
+    id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=255)
+    reason = models.TextField(blank=True)
+    requested_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='petitions')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.title} (by {self.requested_by.username})"
+
+
+class PetitionVote(models.Model):
+    id = models.AutoField(primary_key=True)
+    petition = models.ForeignKey(Petition, on_delete=models.CASCADE, related_name='votes')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='petition_votes')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = (('petition', 'user'),)
+
+    def __str__(self):
+        return f"YES by {self.user.username} on {self.petition.title}"
