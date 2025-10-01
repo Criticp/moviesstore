@@ -48,35 +48,3 @@
   width: fit-content;
   max-height: 400px;
 }
-
-/* Make any image scale to its container without distortion */
-.img-fluid {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Thumbnail/card images: fixed aspect ratio, crop overflow nicely */
-.movie-thumb {
-  width: 100%;
-  aspect-ratio: 3 / 4;      /* choose 3:4 for poster-like thumbs */
-  object-fit: cover;        /* fill + crop */
-  border-radius: 0.5rem;    /* optional: match your rounded style */
-}
-
-/* Detail/hero image: widescreen crop for the show page */
-.movie-hero {
-  width: 100%;
-  aspect-ratio: 16 / 9;     /* use a widescreen frame on mobile */
-  object-fit: cover;
-  border-radius: 0.5rem;
-}
-
-/* Homepage title styling */
-.site-title {
-  font-size: 2.5rem;   /* larger than default */
-  font-weight: 800;    /* extra bold */
-  text-align: center;  /* optional: center align */
-  margin: 1.5rem 0;    /* spacing above and below */
-}
-
