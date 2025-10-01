@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="41ea99cb-6d38-4c0b-b340-0118b82bcfde" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/movies/templates/movies/edit_petition.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/movies/templates/movies/petitions_list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/movies/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/movies/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/movies/templates/movies/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/movies/templates/movies/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/movies/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/movies/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/movies/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/movies/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/moviesstore/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/moviesstore/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +92,7 @@
       <option name="presentableId" value="Default" />
       <updated>1759283307019</updated>
       <workItem from="1759283308190" duration="739000" />
-      <workItem from="1759284353094" duration="4842000" />
+      <workItem from="1759284353094" duration="5937000" />
     </task>
     <servers />
   </component>
