@@ -7,6 +7,8 @@
     <list default="true" id="41ea99cb-6d38-4c0b-b340-0118b82bcfde" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/home/templates/home/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/home/templates/home/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/moviesstore/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/moviesstore/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +109,7 @@
       <updated>1759283307019</updated>
       <workItem from="1759283308190" duration="739000" />
       <workItem from="1759284353094" duration="7223000" />
-      <workItem from="1763427928486" duration="1445000" />
+      <workItem from="1763427928486" duration="2032000" />
     </task>
     <servers />
   </component>

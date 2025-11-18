@@ -3,6 +3,11 @@
   background-size: 100% auto;
 }
 
+/* Landing page title style */
+.landing-title {
+  color: orange; /* simple orange color for "Movies Store" title */
+}
+
 .navbar a.nav-link {
   color: #FFFEF6 !important;
 }
